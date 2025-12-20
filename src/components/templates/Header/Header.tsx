@@ -26,7 +26,6 @@ export default function Header() {
       openMenuButtonColor="#000"
       changeMenuColorOnOpen={true}
       colors={['#ff6b6b', '#ff6b6b']}
-      logoUrl="/path-to-your-logo.svg"
       accentColor="#ff6b6b"
     />
   )
