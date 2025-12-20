@@ -1,9 +1,10 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { createRootRoute } from '@tanstack/react-router'
 
 import Loader from '../components/templates/Loader/Loader'
 import React from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Header from '@/components/templates/Header/Header'
+import AnimatedRoutes from './animatedRoutes'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -22,12 +23,23 @@ function useWindowSize() {
 }
 
 function RootComponent() {
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [isLoading, setIsLoading] = React.useState(() => {
+    if (typeof window === 'undefined') return true
+    const hasSeenIntro = window.sessionStorage.getItem('hasSeenIntroLoader') === 'true'
+    return !hasSeenIntro
+  })
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000)
+    if (!isLoading) return
+    if (typeof window === 'undefined') return
+
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+      window.sessionStorage.setItem('hasSeenIntroLoader', 'true')
+    }, 2000)
+
     return () => clearTimeout(timer)
-  }, [])
+  }, [isLoading])
 
   const width = useWindowSize()
   const isMobile = width < 1300
@@ -54,7 +66,7 @@ function RootComponent() {
         ) : (
           <main className=''>
             <Header />
-            <Outlet key="app" />
+            <AnimatedRoutes />
           </main>
         )}
       </AnimatePresence>
