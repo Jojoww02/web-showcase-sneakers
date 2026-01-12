@@ -6,30 +6,51 @@
   justify-content: center;
   position: fixed;
   z-index: 99;
-  background-color: #ff6b6b;
+  background-color: #1a1a1a; // Darker, cooler background
+  flex-direction: column;
+  
   svg{
     position: absolute;
     top: 0;
     width: 100%;
     height: calc(100% + 300px);
     path{
-      fill: #ff6b6b;
+      fill: #1a1a1a; // Match background
     }
   }
-  p{
+
+  .textContainer {
     display: flex;
-    color: white;
-    font-size: 42px;
     align-items: center;
-    position: absolute;
+    justify-content: center;
     z-index: 1;
-    span{
-      display: block;
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      border-radius: 50%;
-      margin-right: 10px;
+    overflow: hidden;
+    
+    h1 {
+        font-size: 8vw;
+        color: #fff;
+        text-transform: uppercase;
+        margin: 0;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        font-family: 'Impact', 'Arial Black', sans-serif; // Or any bold font
+        display: flex;
+        
+        span {
+            display: inline-block;
+        }
     }
+  }
+
+  .counter {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 300;
+    z-index: 1;
+    font-variant-numeric: tabular-nums;
   }
 }

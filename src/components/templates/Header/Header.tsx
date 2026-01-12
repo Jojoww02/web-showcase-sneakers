@@ -1,33 +1,54 @@
-import StaggeredMenu from '@/components/organism/StaggeredMenu/StaggeredMenu'
+import CardNav from '@/components/organism/CardNav/CardNav'
 
 const menuItems = [
   { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-  { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-  { label: 'Services', ariaLabel: 'View our services', link: '/services' },
-  { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+  { label: 'Events', ariaLabel: 'View events', link: '/events' },
+  { label: 'News', ariaLabel: 'View news', link: '/news' },
+  { label: 'Gallery', ariaLabel: 'View gallery', link: '/gallery' }
 ];
 
 const socialItems = [
+  { label: 'Instagram', link: 'https://instagram.com' },
+  { label: 'TikTok', link: 'https://tiktok.com' },
   { label: 'Twitter', link: 'https://twitter.com' },
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' }
+  { label: 'Discord', link: 'https://discord.com' }
+];
+
+const cardItems = [
+  {
+    label: 'Explore',
+    bgColor: '#ff6b6b',
+    textColor: '#000',
+    links: menuItems.map(m => ({ label: m.label, href: m.link, ariaLabel: m.ariaLabel }))
+  },
+  {
+    label: 'Community',
+    bgColor: '#111111',
+    textColor: '#ffffff',
+    links: [
+      { label: 'Contact', href: '/contact', ariaLabel: 'Get in touch' },
+      { label: 'Privacy', href: '/privacy', ariaLabel: 'View privacy policy' }
+    ]
+  },
+  {
+    label: 'Socials',
+    bgColor: '#1a1a1a',
+    textColor: '#ffffff',
+    links: socialItems.map(s => ({ label: s.label, href: s.link, ariaLabel: s.label }))
+  }
 ];
 
 export default function Header() {
   return (
-    <StaggeredMenu
-      isFixed={true}
-      position="right"
-      items={menuItems}
-      socialItems={socialItems}
-      displaySocials={true}
-      displayItemNumbering={true}
-      menuButtonColor="#fff"
-      openMenuButtonColor="#000"
-      changeMenuColorOnOpen={true}
-      colors={['#ff6b6b', '#ff6b6b']}
-      logoUrl="/path-to-your-logo.svg"
-      accentColor="#ff6b6b"
+    <CardNav
+      logo="/assets/images/favicon_logo.ico"
+      items={cardItems}
+      className=""
+      ease="power3.out"
+      baseColor="#0f0f0f"
+      menuColor="#fff"
+      buttonBgColor="#ff6b6b"
+      buttonTextColor="#000"
     />
   )
 }

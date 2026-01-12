@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import type { StaggeredMenuProps } from '@/types/types';
 import MagneticComponents from '@/anim/Magnetic/Magnetic';
 import { Link } from '@tanstack/react-router';
+import { Logo } from '@/components/atoms/Icons';
 
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = 'right',
@@ -327,7 +328,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   return (
     <div
-      className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-auto h-full'}`}
+      className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'sticky top-0 left-0 w-full'}`}
     >
       <div
         className={(className ? className + ' ' : '') + 'staggered-menu-wrapper relative w-full h-full z-40'}
@@ -358,7 +359,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </div>
 
         <header
-          className="staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between p-[2em] bg-transparent pointer-events-none z-20"
+          className="staggered-menu-header fixed top-0 left-0 w-full flex items-center justify-between p-[2em] bg-transparent pointer-events-none z-20"
           aria-label="Main navigation header"
         >
           <div
@@ -366,7 +367,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             aria-label="Logo"
           >
             <MagneticComponents>
-              <Link to="/">SNEAKVERSE</Link>
+              <Link to="/" className="flex items-center">
+                <Logo className="h-20 w-auto" />
+              </Link>
             </MagneticComponents>
           </div>
 
@@ -480,7 +483,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
       <style>{`
 .sm-scope .staggered-menu-wrapper { position: relative; width: 100%; height: 100%; z-index: 40; }
-.sm-scope .staggered-menu-header { position: absolute; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 2em; background: transparent; pointer-events: none; z-index: 20; }
+.sm-scope .staggered-menu-header { position: fixed; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 2em; background: transparent; pointer-events: none; z-index: 50; }
 .sm-scope .staggered-menu-header > * { pointer-events: auto; }
 .sm-scope .sm-logo { display: flex; align-items: center; user-select: none; }
 .sm-scope .sm-logo-img { display: block; height: 32px; width: auto; object-fit: contain; }
