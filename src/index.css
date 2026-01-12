@@ -1,4 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'Brisa Pro';
+  src: url('/fonts/BrisaPro.otf') format('opentype'),
+       url('/fonts/BrisaPro.ttf') format('truetype'),
+       url('/fonts/BrisaPro.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -7,7 +18,7 @@
 
 body {
   @apply m-0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Geist", sans-serif;
   overflow-x: hidden;
 }
 
@@ -133,4 +144,9 @@ code {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+#content-wrapper,
+.c-scrollbar {
+  pointer-events: auto !important;
 }
