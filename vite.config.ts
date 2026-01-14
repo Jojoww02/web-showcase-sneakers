@@ -12,6 +12,7 @@ export default defineConfig({
     viteReact(),
     tailwindcss(),
   ],
+  envPrefix: ['VITE_', 'AUTH_'],
   test: {
     globals: true,
     environment: 'jsdom',
