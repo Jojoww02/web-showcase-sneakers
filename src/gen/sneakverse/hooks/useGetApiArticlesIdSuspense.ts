@@ -15,67 +15,68 @@ import type {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  GetApiArticlesQueryResponse,
-  GetApiArticlesQueryParams,
-} from "../models/GetApiArticles.ts";
+  GetApiArticlesIdQueryResponse,
+  GetApiArticlesIdPathParams,
+} from "../models/GetApiArticlesId.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
-export const getApiArticlesSuspenseQueryKey = (
-  params?: GetApiArticlesQueryParams,
-) => [{ url: "/api/Articles" }, ...(params ? [params] : [])] as const;
+export const getApiArticlesIdSuspenseQueryKey = (
+  id: GetApiArticlesIdPathParams["id"],
+) => [{ url: "/api/Articles/:id", params: { id: id } }] as const;
 
-export type GetApiArticlesSuspenseQueryKey = ReturnType<
-  typeof getApiArticlesSuspenseQueryKey
+export type GetApiArticlesIdSuspenseQueryKey = ReturnType<
+  typeof getApiArticlesIdSuspenseQueryKey
 >;
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id}
  */
-export async function getApiArticlesSuspense(
-  params?: GetApiArticlesQueryParams,
+export async function getApiArticlesIdSuspense(
+  id: GetApiArticlesIdPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
   const res = await request<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     ResponseErrorConfig<Error>,
     unknown
-  >({ method: "GET", url: `/api/Articles`, params, ...requestConfig });
+  >({ method: "GET", url: `/api/Articles/${id}`, ...requestConfig });
   return res.data;
 }
 
-export function getApiArticlesSuspenseQueryOptions(
-  params?: GetApiArticlesQueryParams,
+export function getApiArticlesIdSuspenseQueryOptions(
+  id: GetApiArticlesIdPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
-  const queryKey = getApiArticlesSuspenseQueryKey(params);
+  const queryKey = getApiArticlesIdSuspenseQueryKey(id);
   return queryOptions<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     ResponseErrorConfig<Error>,
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     typeof queryKey
   >({
+    enabled: !!id,
     queryKey,
     queryFn: async ({ signal }) => {
       config.signal = signal;
-      return getApiArticlesSuspense(params, config);
+      return getApiArticlesIdSuspense(id, config);
     },
   });
 }
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id}
  */
-export function useGetApiArticlesSuspense<
-  TData = GetApiArticlesQueryResponse,
-  TQueryKey extends QueryKey = GetApiArticlesSuspenseQueryKey,
+export function useGetApiArticlesIdSuspense<
+  TData = GetApiArticlesIdQueryResponse,
+  TQueryKey extends QueryKey = GetApiArticlesIdSuspenseQueryKey,
 >(
-  params?: GetApiArticlesQueryParams,
+  id: GetApiArticlesIdPathParams["id"],
   options: {
     query?: Partial<
       UseSuspenseQueryOptions<
-        GetApiArticlesQueryResponse,
+        GetApiArticlesIdQueryResponse,
         ResponseErrorConfig<Error>,
         TData,
         TQueryKey
@@ -87,11 +88,11 @@ export function useGetApiArticlesSuspense<
   const { query: queryConfig = {}, client: config = {} } = options ?? {};
   const { client: queryClient, ...queryOptions } = queryConfig;
   const queryKey =
-    queryOptions?.queryKey ?? getApiArticlesSuspenseQueryKey(params);
+    queryOptions?.queryKey ?? getApiArticlesIdSuspenseQueryKey(id);
 
   const query = useSuspenseQuery(
     {
-      ...getApiArticlesSuspenseQueryOptions(params, config),
+      ...getApiArticlesIdSuspenseQueryOptions(id, config),
       queryKey,
       ...queryOptions,
     } as unknown as UseSuspenseQueryOptions,

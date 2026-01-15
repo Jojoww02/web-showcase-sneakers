@@ -15,6 +15,11 @@ export type PostApiArticlesMutationRequest = {
    */
   Title: string;
   /**
+   * @maxLength 100
+   * @type string
+   */
+  Category: string;
+  /**
    * @type string, binary
    */
   Thumbnail: Blob;

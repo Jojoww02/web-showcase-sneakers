@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { TransitionLink } from '@/components/atoms/TransitionLink/TransitionLink';
 
 export default function Footer() {
     const wrapRef = useRef<HTMLDivElement>(null);
     const isFooterInView = useInView(wrapRef, { once: true, amount: 0.2 });
     return (
-        <div className="relative w-full bg-white z-10">
+        <div className="relative w-full bg-white border-t-[1px] border-black/10 z-10">
             <div className="h-full w-full px-[5vw] py-20 flex flex-col justify-between">
                 <div className="flex flex-col gap-10 lg:flex-row lg:justify-between lg:items-start">
                     {/* Logo & Slogan */}
@@ -18,27 +19,42 @@ export default function Footer() {
                     {/* Links Grid */}
                     <div className="grid grid-cols-2 mt-2 gap-16 md:grid-cols-3 lg:gap-24">
                         <div className="flex flex-col gap-6">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#ff6b6b]">Explore</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#ff6b6b]">Community</h3>
                             <ul className="flex flex-col gap-4 text-sm font-medium text-black/80">
-                                {['Events', 'News', 'Gallery'].map((item) => (
-                                    <li key={item}>
-                                        <a href="#" className="relative hover:text-black transition-colors cursor-pointer group inline-block">
-                                            {item}
+                                {[
+                                    { name: 'Events', path: '/events' },
+                                    { name: 'News', path: '/news' },
+                                    { name: 'Gallery', path: '/gallery' }
+                                ].map((item) => (
+                                    <li key={item.name}>
+                                        <TransitionLink 
+                                            to={item.path} 
+                                            label={item.name}
+                                            className="relative hover:text-black transition-colors cursor-pointer group inline-block"
+                                        >
+                                            {item.name}
                                             <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"></span>
-                                        </a>
+                                        </TransitionLink>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <div className="flex flex-col gap-6">
-                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#ff6b6b]">COMMUNITY</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#ff6b6b]">Others</h3>
                             <ul className="flex flex-col gap-4 text-sm font-medium text-black/80">
-                                {['Contact', 'Privacy'].map((item) => (
-                                    <li key={item}>
-                                        <a href="#" className="relative hover:text-black transition-colors inline-block group">
-                                            {item}
+                                {[
+                                    { name: 'Contact', path: '/contact' },
+                                    { name: 'Privacy', path: '/privacy' }
+                                ].map((item) => (
+                                    <li key={item.name}>
+                                        <TransitionLink 
+                                            to={item.path} 
+                                            label={item.name}
+                                            className="relative hover:text-black transition-colors inline-block group"
+                                        >
+                                            {item.name}
                                             <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"></span>
-                                        </a>
+                                        </TransitionLink>
                                     </li>
                                 ))}
                             </ul>
@@ -99,14 +115,22 @@ export default function Footer() {
                     <div className="flex flex-col md:flex-row justify-between items-center border-t border-black/10 pt-8 text-xs font-medium text-black/40 uppercase tracking-widest">
                         <p>© 2026 Sneakverse. All rights reserved.</p>
                         <div className="flex gap-8 mt-4 md:mt-0">
-                            <a href="#" className="relative hover:text-black transition-colors inline-block group">
+                            <TransitionLink 
+                                to="/privacy" 
+                                label="Privacy Policy"
+                                className="relative hover:text-black transition-colors inline-block group"
+                            >
                                 Privacy Policy
                                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"></span>
-                            </a>
-                            <a href="#" className="relative hover:text-black transition-colors inline-block group">
+                            </TransitionLink>
+                            <TransitionLink 
+                                to="/terms-of-service" 
+                                label="Terms of Service"
+                                className="relative hover:text-black transition-colors inline-block group"
+                            >
                                 Terms of Service
                                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"></span>
-                            </a>
+                            </TransitionLink>
                         </div>
                     </div>
                 </div>

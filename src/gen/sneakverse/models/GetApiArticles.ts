@@ -3,6 +3,13 @@
  * Do not edit manually.
  */
 
+export type GetApiArticlesQueryParams = {
+  /**
+   * @type integer | undefined, int32
+   */
+  id?: number;
+};
+
 /**
  * @description OK
  */
@@ -12,5 +19,6 @@ export type GetApiArticlesQueryResponse = GetApiArticles200;
 
 export type GetApiArticlesQuery = {
   Response: GetApiArticles200;
+  QueryParams: GetApiArticlesQueryParams;
   Errors: any;
 };
