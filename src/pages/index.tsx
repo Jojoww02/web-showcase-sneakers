@@ -3,6 +3,8 @@ import HeroSection from '@/components/organism/HeroSection/HeroSection'
 import { createFileRoute } from '@tanstack/react-router'
 import gsap from 'gsap'
 import { createPortal } from 'react-dom'
+import { TransitionLink } from '@/components/atoms/TransitionLink/TransitionLink'
+import { useGetApiArticles } from '@/gen/sneakverse/hooks/useGetApiArticles'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
@@ -21,7 +23,7 @@ const creators = [
   {
     name: 'Fadli Anwar',
     image:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop',
+      '/assets/images/fadli_image.png',
   },
 ]
 
@@ -60,6 +62,7 @@ const toolkitCards = [
     title: 'Gallery',
     bg: '#5D5FEF',
     fg: '#ffffff',
+    path: '/gallery',
   },
   {
     key: 'events',
@@ -67,6 +70,7 @@ const toolkitCards = [
     title: 'Events',
     bg: '#0f0f10',
     fg: '#ffffff',
+    path: '/events',
   },
   {
     key: 'news/article',
@@ -74,6 +78,7 @@ const toolkitCards = [
     title: 'News/Article',
     bg: '#FF6B6B',
     fg: '#0b0b0c',
+    path: '/news',
   },
 ]
 
@@ -109,6 +114,28 @@ function HomeComponent() {
   const toolkitCursorRef = useRef<HTMLDivElement>(null)
   const toolkitCursorXTo = useRef<((value: number) => gsap.core.Tween) | null>(null)
   const toolkitCursorYTo = useRef<((value: number) => gsap.core.Tween) | null>(null)
+
+  const { data: articlesData } = useGetApiArticles(undefined, { query: { refetchInterval: 30000, refetchOnWindowFocus: false } })
+  const pickDate = (a: any) => a?.publishedAt ?? a?.PublishedAt ?? a?.createdAt ?? a?.CreatedAt ?? a?.date ?? a?.Date ?? null
+  const pickImage = (a: any) => a?.thumbnailUrl ?? a?.ThumbnailUrl ?? a?.thumbnail ?? a?.Thumbnail ?? ''
+  const pickCategory = (a: any) => a?.category ?? a?.Category ?? 'Update'
+  const pickSubtitle = (a: any) => a?.subtitle ?? a?.Subtitle ?? a?.description ?? a?.Description ?? ''
+  const timeAgo = (d: any) => { if (!d) return '-'; const diff = Math.floor((Date.now() - new Date(d).getTime())/1000); if (diff < 60) return `${diff}s ago`; const m = Math.floor(diff/60); if (m < 60) return `${m}m ago`; const h = Math.floor(m/60); if (h < 24) return `${h}h ago`; const days = Math.floor(h/24); return `${days}d ago`; }
+  const newsCards = Array.isArray(articlesData)
+    ? [...articlesData]
+        .sort((a: any, b: any) => {
+          const da = pickDate(a); const db = pickDate(b)
+          return (db ? new Date(db).getTime() : 0) - (da ? new Date(da).getTime() : 0)
+        })
+        .slice(0, 3)
+        .map((a: any) => ({
+          title: a?.title ?? a?.Title ?? '',
+          subtitle: pickSubtitle(a),
+          image: pickImage(a),
+          badgeA: timeAgo(pickDate(a)),
+          badgeB: pickCategory(a),
+        }))
+    : latestNews
 
   const animateTransition = (nextIndex: number) => {
     if (!imageRef.current || !nameRef.current) {
@@ -154,7 +181,7 @@ function HomeComponent() {
   }, [])
 
   const setNewsPositions = (nextIndex: number, animate: boolean) => {
-    const n = latestNews.length
+    const n = newsCards.length
     const wrapped = ((nextIndex % n) + n) % n
 
     setNewsIndex(wrapped)
@@ -512,7 +539,7 @@ function HomeComponent() {
 
                 <div className="relative z-10 w-full mt-10 overflow-hidden rounded-3xl shadow-xl border border-white/10 [perspective:1200px] isolate">
                   <div className="relative h-64 [transform-style:preserve-3d]">
-                    {latestNews.map((n, i) => (
+                    {newsCards.map((n, i) => (
                       <div
                         key={n.title}
                         ref={(el) => {
@@ -530,7 +557,7 @@ function HomeComponent() {
                               <h5 className="text-3xl font-bold leading-none tracking-tight">{n.title}</h5>
                               <p className="mt-2 text-sm font-medium opacity-70">{n.subtitle}</p>
                             </div>
-                            <div className="text-[10px] font-bold uppercase tracking-[0.22em] opacity-60">Latest update</div>
+                            <div className="text-[10px] font-bold uppercase tracking-[0.22em] opacity-60">latest Update</div>
                           </div>
 
                           <div className="bg-[#F3F0E6] relative overflow-hidden">
@@ -716,14 +743,19 @@ function HomeComponent() {
                             </>
                           )}
 
-                          <div className="mt-6">
-                            <button
-                              type="button"
-                              className={`w-fit px-5 py-2 rounded-full text-sm cursor-pointer font-medium ${c.key === 'vault' ? 'bg-white text-black' : 'bg-white/90 text-black'
+                          <div 
+                            className="mt-6"
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <TransitionLink
+                              to={c.path}
+                              label={c.title}
+                              className={`inline-block w-fit px-5 py-2 rounded-full text-sm cursor-pointer font-medium ${c.key === 'vault' ? 'bg-white text-black' : 'bg-white/90 text-black'
                                 }`}
                             >
                               Discover
-                            </button>
+                            </TransitionLink>
                           </div>
                         </div>
                       </div>

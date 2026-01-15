@@ -31,6 +31,8 @@ function RootComponent() {
   const locoScrollRef = React.useRef<LocomotiveScroll | null>(null)
   const isOverlayAnimating = React.useRef(false)
   const routerState = useRouterState()
+  const isNews = routerState.location.href.includes('/news')
+  const isDetailNews = routerState.location.href.includes('/news/detail-news')
 
   const [isLoading, setIsLoading] = React.useState(() => {
     if (typeof window === 'undefined') return true
@@ -48,7 +50,7 @@ function RootComponent() {
   const is404 = routerState.matches.some((match: any) => match.status === 'notFound' || match.globalNotFound)
 
   React.useEffect(() => {
-    if (isLoading || isMobile || !scrollContainer) return
+    if (isLoading || isMobile || !scrollContainer || isDetailNews || isNews) return
 
     locoScrollRef.current = new LocomotiveScroll({
       el: scrollContainer,
@@ -66,7 +68,20 @@ function RootComponent() {
       locoScrollRef.current?.destroy()
       locoScrollRef.current = null
     }
-  }, [isLoading, isMobile, scrollContainer])
+  }, [isLoading, isMobile, scrollContainer, isDetailNews])
+
+  React.useEffect(() => {
+    if (!isDetailNews) return
+    if (!locoScrollRef.current) return
+
+    locoScrollRef.current.destroy()
+    locoScrollRef.current = null
+
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
+  }, [isDetailNews])
 
   React.useEffect(() => {
     if (locoScrollRef.current) {

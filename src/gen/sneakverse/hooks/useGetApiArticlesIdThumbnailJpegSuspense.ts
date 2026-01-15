@@ -15,67 +15,72 @@ import type {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  GetApiArticlesQueryResponse,
-  GetApiArticlesQueryParams,
-} from "../models/GetApiArticles.ts";
+  GetApiArticlesIdThumbnailJpegQueryResponse,
+  GetApiArticlesIdThumbnailJpegPathParams,
+} from "../models/GetApiArticlesIdThumbnailJpeg.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
-export const getApiArticlesSuspenseQueryKey = (
-  params?: GetApiArticlesQueryParams,
-) => [{ url: "/api/Articles" }, ...(params ? [params] : [])] as const;
+export const getApiArticlesIdThumbnailJpegSuspenseQueryKey = (
+  id: GetApiArticlesIdThumbnailJpegPathParams["id"],
+) => [{ url: "/api/Articles/:id/thumbnail.jpeg", params: { id: id } }] as const;
 
-export type GetApiArticlesSuspenseQueryKey = ReturnType<
-  typeof getApiArticlesSuspenseQueryKey
+export type GetApiArticlesIdThumbnailJpegSuspenseQueryKey = ReturnType<
+  typeof getApiArticlesIdThumbnailJpegSuspenseQueryKey
 >;
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id/thumbnail.jpeg}
  */
-export async function getApiArticlesSuspense(
-  params?: GetApiArticlesQueryParams,
+export async function getApiArticlesIdThumbnailJpegSuspense(
+  id: GetApiArticlesIdThumbnailJpegPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
   const res = await request<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdThumbnailJpegQueryResponse,
     ResponseErrorConfig<Error>,
     unknown
-  >({ method: "GET", url: `/api/Articles`, params, ...requestConfig });
+  >({
+    method: "GET",
+    url: `/api/Articles/${id}/thumbnail.jpeg`,
+    ...requestConfig,
+  });
   return res.data;
 }
 
-export function getApiArticlesSuspenseQueryOptions(
-  params?: GetApiArticlesQueryParams,
+export function getApiArticlesIdThumbnailJpegSuspenseQueryOptions(
+  id: GetApiArticlesIdThumbnailJpegPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
-  const queryKey = getApiArticlesSuspenseQueryKey(params);
+  const queryKey = getApiArticlesIdThumbnailJpegSuspenseQueryKey(id);
   return queryOptions<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdThumbnailJpegQueryResponse,
     ResponseErrorConfig<Error>,
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdThumbnailJpegQueryResponse,
     typeof queryKey
   >({
+    enabled: !!id,
     queryKey,
     queryFn: async ({ signal }) => {
       config.signal = signal;
-      return getApiArticlesSuspense(params, config);
+      return getApiArticlesIdThumbnailJpegSuspense(id, config);
     },
   });
 }
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id/thumbnail.jpeg}
  */
-export function useGetApiArticlesSuspense<
-  TData = GetApiArticlesQueryResponse,
-  TQueryKey extends QueryKey = GetApiArticlesSuspenseQueryKey,
+export function useGetApiArticlesIdThumbnailJpegSuspense<
+  TData = GetApiArticlesIdThumbnailJpegQueryResponse,
+  TQueryKey extends QueryKey = GetApiArticlesIdThumbnailJpegSuspenseQueryKey,
 >(
-  params?: GetApiArticlesQueryParams,
+  id: GetApiArticlesIdThumbnailJpegPathParams["id"],
   options: {
     query?: Partial<
       UseSuspenseQueryOptions<
-        GetApiArticlesQueryResponse,
+        GetApiArticlesIdThumbnailJpegQueryResponse,
         ResponseErrorConfig<Error>,
         TData,
         TQueryKey
@@ -87,11 +92,11 @@ export function useGetApiArticlesSuspense<
   const { query: queryConfig = {}, client: config = {} } = options ?? {};
   const { client: queryClient, ...queryOptions } = queryConfig;
   const queryKey =
-    queryOptions?.queryKey ?? getApiArticlesSuspenseQueryKey(params);
+    queryOptions?.queryKey ?? getApiArticlesIdThumbnailJpegSuspenseQueryKey(id);
 
   const query = useSuspenseQuery(
     {
-      ...getApiArticlesSuspenseQueryOptions(params, config),
+      ...getApiArticlesIdThumbnailJpegSuspenseQueryOptions(id, config),
       queryKey,
       ...queryOptions,
     } as unknown as UseSuspenseQueryOptions,

@@ -45,7 +45,7 @@ function Profile() {
               <span>Profile</span>
             </h1>
             <p className="mt-2 text-sm text-black/60">
-              Detail akun yang terhubung dengan sesi login Anda.
+              Account details connected to your login session.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ function Profile() {
             {(isLoading || isFetching) && (
               <div className="flex items-center justify-center py-10 text-black/60 gap-3">
                 <RefreshCw size={18} className="animate-spin" />
-                <span>Memuat data profile...</span>
+                <span>Loading profile data...</span>
               </div>
             )}
 
@@ -63,17 +63,17 @@ function Profile() {
                   <AlertTriangle size={18} className="mt-[2px]" />
                   <div>
                     <p className="font-semibold">
-                      Gagal memuat data profile.
+                      Failed to load profile data.
                     </p>
                     {isUnauthorized ? (
                       <p className="mt-1">
-                        Sesi Anda mungkin sudah berakhir. Silakan login kembali
-                        untuk melihat halaman ini.
+                        Your session may have expired. Please log in again to
+                        view this page.
                       </p>
                     ) : (
                       <p className="mt-1">
-                        Terjadi kesalahan saat mengambil data. Coba lagi
-                        beberapa saat lagi.
+                        An error occurred while fetching data. Please try again
+                        later.
                       </p>
                     )}
                   </div>
@@ -84,7 +84,7 @@ function Profile() {
                     className="px-4 h-9 rounded-lg border border-red-300 text-xs font-semibold text-red-700 cursor-pointer hover:bg-red-100 transition"
                     onClick={() => refetch()}
                   >
-                    Coba lagi
+                    Try again
                   </button>
                   {isUnauthorized && (
                     <button
@@ -92,7 +92,7 @@ function Profile() {
                       className="px-4 h-9 rounded-lg bg-red-600 text-white text-xs font-semibold cursor-pointer hover:bg-red-700 transition"
                       onClick={() => navigate({ to: '/login' })}
                     >
-                      Ke halaman login
+                      Go to login page
                     </button>
                   )}
                 </div>
@@ -118,7 +118,7 @@ function Profile() {
                     <div className="flex items-center gap-2 text-sm text-black/60 md:ml-auto">
                       <Calendar size={14} />
                       <span>
-                        Bergabung: {new Date(createdAt).toLocaleDateString()}
+                        Joined: {new Date(createdAt).toLocaleDateString()}
                       </span>
                     </div>
                   )}
@@ -127,7 +127,7 @@ function Profile() {
                 {user && Object.keys(user).length > 0 && (
                   <div className="pt-4 border-t border-black/5">
                     <h2 className="text-sm font-semibold tracking-wide uppercase text-black/60 mb-3">
-                      Detail akun
+                      Account detail
                     </h2>
                     <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
                       {Object.entries(user)
@@ -152,16 +152,24 @@ function Profile() {
                           return t === 'string' || t === 'number' || t === 'boolean'
                         })
                         .slice(0, 10)
-                        .map(([key, value]) => (
-                          <div key={key} className="flex flex-col">
-                            <dt className="text-xs uppercase tracking-wide text-black/50">
-                              {key}
-                            </dt>
-                            <dd className="font-medium text-black/80 break-all">
-                              {String(value)}
-                            </dd>
-                          </div>
-                        ))}
+                        .map(([key, value]) => {
+                          const formattedKey = key
+                            .replace(/([A-Z])/g, ' $1')
+                            .replace(/_/g, ' ')
+                            .replace(/\b\w/g, (c) => c.toUpperCase())
+                            .trim()
+
+                          return (
+                            <div key={key} className="flex flex-col">
+                              <dt className="text-xs uppercase tracking-wide text-black/50">
+                                {formattedKey}
+                              </dt>
+                              <dd className="font-medium text-black/80 break-all">
+                                {String(value)}
+                              </dd>
+                            </div>
+                          )
+                        })}
                     </dl>
                   </div>
                 )}

@@ -16,13 +16,13 @@ const socialItems = [
 
 const cardItems = [
   {
-    label: 'Explore',
+    label: 'Community',
     bgColor: '#ff6b6b',
     textColor: '#000',
     links: menuItems.map(m => ({ label: m.label, href: m.link, ariaLabel: m.ariaLabel }))
   },
   {
-    label: 'Community',
+    label: 'Others',
     bgColor: '#111111',
     textColor: '#ffffff',
     links: [

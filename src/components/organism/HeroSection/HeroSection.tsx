@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import AnimatedContent from '../../../anim/AnimatedContent/AnimatedContent'
+import { TransitionLink } from '@/components/atoms/TransitionLink/TransitionLink'
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement>(null)
@@ -166,32 +167,34 @@ export default function HeroSection() {
 
           <div ref={videoCardRef} className="relative w-[300px] md:w-[380px] aspect-[9/14] perspective-[1000px] group cursor-pointer">
             {/* Card Container */}
-            <div className="w-full h-full mt-15 rounded-[30px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border-4 border-white bg-black relative z-10 transition-all duration-500 group-hover:scale-[1.02]">
-              <video
-                src="/assets/video/video_hero.mp4"
-                muted
-                loop
-                playsInline
-                autoPlay
-                className="h-full w-full object-cover scale-110 opacity-90 group-hover:opacity-100 transition-opacity"
-              />
+            <TransitionLink to="/events/detail/" label="Events Detail">
+              <div className="w-full h-full mt-15 rounded-[30px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border-4 border-white bg-black relative z-10 transition-all duration-500 group-hover:scale-[1.02]">
+                <video
+                  src="/assets/video/video_hero.mp4"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  className="h-full w-full object-cover scale-110 opacity-90 group-hover:opacity-100 transition-opacity"
+                />
 
-              {/* Internal Card Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                {/* Internal Card Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
 
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="overflow-hidden">
-                  <p className="text-white text-3xl font-black uppercase tracking-tighter translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    Tokyo Summit
-                  </p>
-                </div>
-                <div className="overflow-hidden delay-75">
-                  <p className="text-[#ff6b6b] text-sm font-bold uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-75">
-                    February 2026
-                  </p>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="overflow-hidden">
+                    <p className="text-white text-3xl font-black uppercase tracking-tighter translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                      Tokyo Summit
+                    </p>
+                  </div>
+                  <div className="overflow-hidden delay-75">
+                    <p className="text-[#ff6b6b] text-sm font-bold uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                      February 2026
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </TransitionLink>
 
             {/* Decorative Elements around card */}
             <div className="absolute -top-5 -right-12 z-30">
@@ -201,7 +204,7 @@ export default function HeroSection() {
                     <path id="curve" d="M 50 50 m -37 0 a 37 37 0 1 1 74 0 a 37 37 0 1 1 -74 0" fill="transparent" />
                     <text className="text-[11px] font-bold uppercase tracking-widest">
                       <textPath href="#curve">
-                        Official Drop • Official Drop •
+                        Official Event • Official Event •
                       </textPath>
                     </text>
                   </svg>

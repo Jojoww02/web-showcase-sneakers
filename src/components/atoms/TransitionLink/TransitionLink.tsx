@@ -5,9 +5,10 @@ import { gsap } from 'gsap'
 interface TransitionLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string
   children: React.ReactNode
+  label?: string
 }
 
-export function TransitionLink({ to, children, className, ...props }: TransitionLinkProps) {
+export function TransitionLink({ to, children, className, label: customLabel, ...props }: TransitionLinkProps) {
   const router = useRouter()
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -15,7 +16,7 @@ export function TransitionLink({ to, children, className, ...props }: Transition
 
     if (window.location.pathname === to) return
 
-    const label = typeof children === 'string' ? children : 'Loading...'
+    const label = customLabel || (typeof children === 'string' ? children : 'Loading...')
     
     const textEl = document.getElementById('page-transition-text')
     if (textEl) {

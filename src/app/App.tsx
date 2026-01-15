@@ -4,6 +4,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import NiceModal from "@ebay/nice-modal-react";
 import { router } from "@/Router";
 
 const queryClient = new QueryClient();
@@ -21,11 +22,17 @@ export default function App() {
         }
     }, [isInView])
 
+    useEffect(() => {
+        NiceModal.register("noop", () => null);
+    }, []);
+
     return (
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-            <TanStackRouterDevtools router={router} position="bottom-left" />
-            <ReactQueryDevtools initialIsOpen={false} />
+            <NiceModal.Provider>
+                <RouterProvider router={router} />
+                <TanStackRouterDevtools router={router} position="bottom-left" />
+                <ReactQueryDevtools initialIsOpen={false} />
+            </NiceModal.Provider>
         </QueryClientProvider>
     )
 }

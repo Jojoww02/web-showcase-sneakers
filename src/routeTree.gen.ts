@@ -10,15 +10,29 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as IndexRouteImport } from './pages/index'
+import { Route as TermsOfServiceIndexRouteImport } from './pages/terms-of-service/index'
 import { Route as ResetPasswordIndexRouteImport } from './pages/reset-password/index'
 import { Route as RegisterIndexRouteImport } from './pages/register/index'
 import { Route as ProfileIndexRouteImport } from './pages/profile/index'
+import { Route as PrivacyIndexRouteImport } from './pages/privacy/index'
+import { Route as NewsIndexRouteImport } from './pages/news/index'
 import { Route as LoginIndexRouteImport } from './pages/login/index'
+import { Route as GalleryIndexRouteImport } from './pages/gallery/index'
 import { Route as ForgotPasswordIndexRouteImport } from './pages/forgot-password/index'
+import { Route as EventsIndexRouteImport } from './pages/events/index'
+import { Route as ContactIndexRouteImport } from './pages/contact/index'
+import { Route as NewsDetailNewsIndexRouteImport } from './pages/news/detail-news/index'
+import { Route as NewsCreateNewsIndexRouteImport } from './pages/news/create-news/index'
+import { Route as EventsDetailIndexRouteImport } from './pages/events/detail/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfServiceIndexRoute = TermsOfServiceIndexRouteImport.update({
+  id: '/terms-of-service/',
+  path: '/terms-of-service/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordIndexRoute = ResetPasswordIndexRouteImport.update({
@@ -36,9 +50,24 @@ const ProfileIndexRoute = ProfileIndexRouteImport.update({
   path: '/profile/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyIndexRoute = PrivacyIndexRouteImport.update({
+  id: '/privacy/',
+  path: '/privacy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryIndexRoute = GalleryIndexRouteImport.update({
+  id: '/gallery/',
+  path: '/gallery/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordIndexRoute = ForgotPasswordIndexRouteImport.update({
@@ -46,66 +75,154 @@ const ForgotPasswordIndexRoute = ForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsIndexRoute = EventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactIndexRoute = ContactIndexRouteImport.update({
+  id: '/contact/',
+  path: '/contact/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsDetailNewsIndexRoute = NewsDetailNewsIndexRouteImport.update({
+  id: '/news/detail-news/',
+  path: '/news/detail-news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsCreateNewsIndexRoute = NewsCreateNewsIndexRouteImport.update({
+  id: '/news/create-news/',
+  path: '/news/create-news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsDetailIndexRoute = EventsDetailIndexRouteImport.update({
+  id: '/events/detail/',
+  path: '/events/detail/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactIndexRoute
+  '/events': typeof EventsIndexRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/gallery': typeof GalleryIndexRoute
   '/login': typeof LoginIndexRoute
+  '/news': typeof NewsIndexRoute
+  '/privacy': typeof PrivacyIndexRoute
   '/profile': typeof ProfileIndexRoute
   '/register': typeof RegisterIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
+  '/terms-of-service': typeof TermsOfServiceIndexRoute
+  '/events/detail': typeof EventsDetailIndexRoute
+  '/news/create-news': typeof NewsCreateNewsIndexRoute
+  '/news/detail-news': typeof NewsDetailNewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactIndexRoute
+  '/events': typeof EventsIndexRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/gallery': typeof GalleryIndexRoute
   '/login': typeof LoginIndexRoute
+  '/news': typeof NewsIndexRoute
+  '/privacy': typeof PrivacyIndexRoute
   '/profile': typeof ProfileIndexRoute
   '/register': typeof RegisterIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
+  '/terms-of-service': typeof TermsOfServiceIndexRoute
+  '/events/detail': typeof EventsDetailIndexRoute
+  '/news/create-news': typeof NewsCreateNewsIndexRoute
+  '/news/detail-news': typeof NewsDetailNewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact/': typeof ContactIndexRoute
+  '/events/': typeof EventsIndexRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
+  '/gallery/': typeof GalleryIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/news/': typeof NewsIndexRoute
+  '/privacy/': typeof PrivacyIndexRoute
   '/profile/': typeof ProfileIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
+  '/terms-of-service/': typeof TermsOfServiceIndexRoute
+  '/events/detail/': typeof EventsDetailIndexRoute
+  '/news/create-news/': typeof NewsCreateNewsIndexRoute
+  '/news/detail-news/': typeof NewsDetailNewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
+    | '/events'
     | '/forgot-password'
+    | '/gallery'
     | '/login'
+    | '/news'
+    | '/privacy'
     | '/profile'
     | '/register'
     | '/reset-password'
+    | '/terms-of-service'
+    | '/events/detail'
+    | '/news/create-news'
+    | '/news/detail-news'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
+    | '/events'
     | '/forgot-password'
+    | '/gallery'
     | '/login'
+    | '/news'
+    | '/privacy'
     | '/profile'
     | '/register'
     | '/reset-password'
+    | '/terms-of-service'
+    | '/events/detail'
+    | '/news/create-news'
+    | '/news/detail-news'
   id:
     | '__root__'
     | '/'
+    | '/contact/'
+    | '/events/'
     | '/forgot-password/'
+    | '/gallery/'
     | '/login/'
+    | '/news/'
+    | '/privacy/'
     | '/profile/'
     | '/register/'
     | '/reset-password/'
+    | '/terms-of-service/'
+    | '/events/detail/'
+    | '/news/create-news/'
+    | '/news/detail-news/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactIndexRoute: typeof ContactIndexRoute
+  EventsIndexRoute: typeof EventsIndexRoute
   ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+  GalleryIndexRoute: typeof GalleryIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
+  NewsIndexRoute: typeof NewsIndexRoute
+  PrivacyIndexRoute: typeof PrivacyIndexRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
+  TermsOfServiceIndexRoute: typeof TermsOfServiceIndexRoute
+  EventsDetailIndexRoute: typeof EventsDetailIndexRoute
+  NewsCreateNewsIndexRoute: typeof NewsCreateNewsIndexRoute
+  NewsDetailNewsIndexRoute: typeof NewsDetailNewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -115,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-of-service/': {
+      id: '/terms-of-service/'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password/': {
@@ -138,11 +262,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy/': {
+      id: '/privacy/'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news/': {
+      id: '/news/'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login/': {
       id: '/login/'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/': {
+      id: '/gallery/'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password/': {
@@ -152,16 +297,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact/': {
+      id: '/contact/'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news/detail-news/': {
+      id: '/news/detail-news/'
+      path: '/news/detail-news'
+      fullPath: '/news/detail-news'
+      preLoaderRoute: typeof NewsDetailNewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news/create-news/': {
+      id: '/news/create-news/'
+      path: '/news/create-news'
+      fullPath: '/news/create-news'
+      preLoaderRoute: typeof NewsCreateNewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/detail/': {
+      id: '/events/detail/'
+      path: '/events/detail'
+      fullPath: '/events/detail'
+      preLoaderRoute: typeof EventsDetailIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactIndexRoute: ContactIndexRoute,
+  EventsIndexRoute: EventsIndexRoute,
   ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
+  GalleryIndexRoute: GalleryIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
+  NewsIndexRoute: NewsIndexRoute,
+  PrivacyIndexRoute: PrivacyIndexRoute,
   ProfileIndexRoute: ProfileIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   ResetPasswordIndexRoute: ResetPasswordIndexRoute,
+  TermsOfServiceIndexRoute: TermsOfServiceIndexRoute,
+  EventsDetailIndexRoute: EventsDetailIndexRoute,
+  NewsCreateNewsIndexRoute: NewsCreateNewsIndexRoute,
+  NewsDetailNewsIndexRoute: NewsDetailNewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
