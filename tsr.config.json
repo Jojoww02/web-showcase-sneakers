@@ -1,5 +1,5 @@
 {
   "routesDirectory": "./src/pages",
   "generatedRouteTree": "./src/routeTree.gen.ts",
-  "routeFileIgnorePattern":"_components|_hooks|animatedRoutes"
+  "routeFileIgnorePattern":"_components|_hooks|animatedRoutes|_detail"
 }
