@@ -15,65 +15,69 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 import type {
-  GetApiArticlesQueryResponse,
-  GetApiArticlesQueryParams,
-} from "../models/GetApiArticles.ts";
+  GetApiArticlesIdQueryResponse,
+  GetApiArticlesIdPathParams,
+} from "../models/GetApiArticlesId.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-export const getApiArticlesQueryKey = (params?: GetApiArticlesQueryParams) =>
-  [{ url: "/api/Articles" }, ...(params ? [params] : [])] as const;
+export const getApiArticlesIdQueryKey = (
+  id: GetApiArticlesIdPathParams["id"],
+) => [{ url: "/api/Articles/:id", params: { id: id } }] as const;
 
-export type GetApiArticlesQueryKey = ReturnType<typeof getApiArticlesQueryKey>;
+export type GetApiArticlesIdQueryKey = ReturnType<
+  typeof getApiArticlesIdQueryKey
+>;
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id}
  */
-export async function getApiArticles(
-  params?: GetApiArticlesQueryParams,
+export async function getApiArticlesId(
+  id: GetApiArticlesIdPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
   const res = await request<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     ResponseErrorConfig<Error>,
     unknown
-  >({ method: "GET", url: `/api/Articles`, params, ...requestConfig });
+  >({ method: "GET", url: `/api/Articles/${id}`, ...requestConfig });
   return res.data;
 }
 
-export function getApiArticlesQueryOptions(
-  params?: GetApiArticlesQueryParams,
+export function getApiArticlesIdQueryOptions(
+  id: GetApiArticlesIdPathParams["id"],
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
-  const queryKey = getApiArticlesQueryKey(params);
+  const queryKey = getApiArticlesIdQueryKey(id);
   return queryOptions<
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     ResponseErrorConfig<Error>,
-    GetApiArticlesQueryResponse,
+    GetApiArticlesIdQueryResponse,
     typeof queryKey
   >({
+    enabled: !!id,
     queryKey,
     queryFn: async ({ signal }) => {
       config.signal = signal;
-      return getApiArticles(params, config);
+      return getApiArticlesId(id, config);
     },
   });
 }
 
 /**
- * {@link /api/Articles}
+ * {@link /api/Articles/:id}
  */
-export function useGetApiArticles<
-  TData = GetApiArticlesQueryResponse,
-  TQueryData = GetApiArticlesQueryResponse,
-  TQueryKey extends QueryKey = GetApiArticlesQueryKey,
+export function useGetApiArticlesId<
+  TData = GetApiArticlesIdQueryResponse,
+  TQueryData = GetApiArticlesIdQueryResponse,
+  TQueryKey extends QueryKey = GetApiArticlesIdQueryKey,
 >(
-  params?: GetApiArticlesQueryParams,
+  id: GetApiArticlesIdPathParams["id"],
   options: {
     query?: Partial<
       QueryObserverOptions<
-        GetApiArticlesQueryResponse,
+        GetApiArticlesIdQueryResponse,
         ResponseErrorConfig<Error>,
         TData,
         TQueryData,
@@ -85,11 +89,11 @@ export function useGetApiArticles<
 ) {
   const { query: queryConfig = {}, client: config = {} } = options ?? {};
   const { client: queryClient, ...queryOptions } = queryConfig;
-  const queryKey = queryOptions?.queryKey ?? getApiArticlesQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getApiArticlesIdQueryKey(id);
 
   const query = useQuery(
     {
-      ...getApiArticlesQueryOptions(params, config),
+      ...getApiArticlesIdQueryOptions(id, config),
       queryKey,
       ...queryOptions,
     } as unknown as QueryObserverOptions,
